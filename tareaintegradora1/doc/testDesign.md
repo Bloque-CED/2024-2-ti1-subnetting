@@ -10,7 +10,24 @@ Las pruebas están diseñadas para cumplir los siguientes objetivos:
 
 ## Casos de Prueba
 
-### 1. Lista Vacía
+Inicialmente se van a tomar casos donde la lista provenga de las siguientes formas: 
+- Lista vacia
+- Lista con un solo elemento
+- Lista ya ordenada
+- Lista en orden inverso
+- Lista con elementos repetidos
+- Lista con objetos mayores a 32 bits (Long)
+
+### Pruebas para Heap Sort
+
+| Nombre de Test Case | Clase | Metodo | Descripcion | Setup | Entrada | Salida esperada|
+|---------------------|-------|--------|-------------|-------|---------|----------------|
+|HeapSort should sort an empty list| HeapSort | heapSort | Verifica que <span style="color: green;">heapSort</span> permita el ordenamiento de una lista vacia | val controller = new Controller() | heapSort(<span style="color: yellow;">List()</span>) | List() |
+|HeapSort should sort a list with one element| HeapSort | heapSort | Verifica que <span style="color: green;">heapSort</span> permita el ordenamiento de una lista con un solo elemento y no retorne ningun error por contener un unico objeto | val controller = new Controller() <br> val heap = new HeapSort() | heapSort(<span style="color: yellow;">List(New Object())</span>) | List(New Object()) | HeapSort should sort a sorted list | HeapSort | heapSort | Verifica que <span style="color: green;">heapSort</span> soporte el ordenamiento de una lista ya ordenada | val controller = new Controller() val heap = new HeapSort() | heapSort(<span style="color: yellow;">List(Object_1, Object_2, Object_3, Object_4,...,Object_n)</span>) | List(Object_1, Object_2, Object_3, Object_4,...,Object_n) | 
+
+
+
+
 
 - **Descripción:** Verifica que el algoritmo maneja correctamente una lista vacía.
 - **Entrada:** `List()`
