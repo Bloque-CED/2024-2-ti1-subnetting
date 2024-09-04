@@ -1,6 +1,11 @@
 # 2024-2-ti1-subnetting
 2024-2-ti1-subnetting created by GitHub Classroom
 
+Santiago Espinosa Giraldo
+Thomas Brueck Estrada
+Santiago Cardenas Montes
+John Kennedy Landazuri Sandoval
+
 # Functional Sorting Algorithms Project
 
 ## Project Overview
