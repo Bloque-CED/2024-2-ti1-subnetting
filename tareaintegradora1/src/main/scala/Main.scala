@@ -1,4 +1,7 @@
-// Main.scala
+import RadixSort._
+import CountingSort._
+import HeapSort._
+
 
 object Main {
   def main(args: Array[String]): Unit = {
