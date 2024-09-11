@@ -43,7 +43,7 @@ object RadixSort {
    */
   def radixSort(xs: List[Int]): List[Int] = {
     val max = getMax(xs)
-    @tailrec
+    @tailrec // Tail recursive function to sort based on each digit.
     def sortRec(exp: Int, xs: List[Int]): List[Int] = {
       if (max / exp > 0) sortRec(exp * 10, countingSort(xs, exp))
       else xs
