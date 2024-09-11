@@ -1,7 +1,4 @@
-// radixsort.scala
-
 import scala.annotation.tailrec
-
 object RadixSort {
   /**
    * Function to get the maximum value in a list of integers.
@@ -19,7 +16,6 @@ object RadixSort {
    * @param exp Exponent representing the place value.
    * @return Sorted list based on current place value.
    */
-  @tailrec
   def countingSort(xs: List[Int], exp: Int): List[Int] = {
     val n = xs.length
     val output = Array.ofDim[Int](n)
