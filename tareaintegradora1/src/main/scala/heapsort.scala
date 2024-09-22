@@ -1,49 +1,98 @@
+import scala.annotation.tailrec
 
-// heapsort.scala
+
+//TODO: ask about max-heap and min-heap
 
 object HeapSort {
 
-  /**
-   * Heapify a subtree rooted at index i.
-   * @param xs List of integers (as an ArrayBuffer).
-   * @param n Size of the heap.
-   * @param i Index of the root element.
-   */
-  def heapify(xs: Array[Int], n: Int, i: Int): Unit = {
-    var largest = i
-    val left = 2 * i + 1
-    val right = 2 * i + 2
+  // Método general de HeapSort que puede ordenar de manera ascendente o descendente
+  def heapsort(list: List[Int], isMaxHeap: Boolean): List[Int] = {
+    val heapified = buildHeap(list, isMaxHeap)
+    sortHeap(heapified, isMaxHeap)
+  }
 
-    if (left < n && xs(left) > xs(largest)) largest = left
-    if (right < n && xs(right) > xs(largest)) largest = right
+  // Construye un heap (MaxHeap o MinHeap según "isMaxHeap")
+  private def buildHeap(list: List[Int], isMaxHeap: Boolean): List[Int] = {
+    @tailrec
+    def heapify(index: Int, currentList: List[Int]): List[Int] = {
+      index match {
+        case index if index < 0 => currentList
+        case index => heapify(index - 1, heapifyNode(index, currentList, isMaxHeap))
+      }
+    }
 
-    if (largest != i) {
-      val swap = xs(i)
-      xs(i) = xs(largest)
-      xs(largest) = swap
-      heapify(xs, n, largest)
+    //First in execute before the heapify method with @tailrec
+    heapify((list.length / 2) - 1, list)
+  }
+
+  // Aplica MaxHeapify o MinHeapify dependiendo del valor de "isMaxHeap"
+  //TODO: Check the logic
+  private def heapifyNode(index: Int, list: List[Int], isMaxHeap: Boolean): List[Int] = {
+    val leftIndex = 2 * index + 1
+    val rightIndex = 2 * index + 2
+    val size = list.length
+
+    val chosenIndex = (leftIndex < size, rightIndex < size) match {
+      case (true, true) =>
+        if (isMaxHeap) {
+          if (list(leftIndex) > list(index) && list(leftIndex) >= list(rightIndex)) leftIndex
+          else if (list(rightIndex) > list(index)) rightIndex
+          else index
+        } else {
+          if (list(leftIndex) < list(index) && list(leftIndex) <= list(rightIndex)) leftIndex
+          else if (list(rightIndex) < list(index)) rightIndex
+          else index
+        }
+      case (true, false) =>
+        if (isMaxHeap) {
+          if (list(leftIndex) > list(index)) leftIndex else index
+        } else {
+          if (list(leftIndex) < list(index)) leftIndex else index
+        }
+      case (false, true) =>
+        if (isMaxHeap) {
+          if (list(rightIndex) > list(index)) rightIndex else index
+        } else {
+          if (list(rightIndex) < list(index)) rightIndex else index
+        }
+      case (false, false) => index
+    }
+
+    if (chosenIndex != index) {
+      swap(list, index, chosenIndex) match {
+        case swappedList => heapifyNode(chosenIndex, swappedList, isMaxHeap)
+      }
+    } else {
+      list
     }
   }
 
-  /**
-   * HeapSort implementation.
-   * @param xs List of integers.
-   * @return Sorted list of integers.
-   */
-  def heapSort(xs: List[Int]): List[Int] = {
-    val arr = xs.toArray
-    val n = arr.length
+  // Intercambia dos elementos en la lista
+  //TODO: ask about pattern matching here
+  private def swap(list: List[Int], index1: Int, index2: Int): List[Int] = {
+    if (index1 == index2) list
+    else {
+      val elem1 = list(index1)
+      val elem2 = list(index2)
+      list.updated(index1, elem2).updated(index2, elem1)
+    }
+  }
 
-    for (i <- n / 2 - 1 to 0 by -1) {
-      heapify(arr, n, i)
+  // Ordena el heap extraído
+  private def sortHeap(list: List[Int], isMaxHeap: Boolean): List[Int] = {
+    @tailrec
+    def sort(currentList: List[Int], sortedList: List[Int]): List[Int] = {
+      currentList match {
+        case Nil => sortedList
+        case _ =>
+          val swappedList = swap(currentList, 0, currentList.length - 1)
+          val element = swappedList.last
+          val reducedHeap = heapifyNode(0, swappedList.init, isMaxHeap)
+
+          sort(reducedHeap, element :: sortedList)
+      }
     }
 
-    for (i <- n - 1 to 1 by -1) {
-      val temp = arr(0)
-      arr(0) = arr(i)
-      arr(i) = temp
-      heapify(arr, i, 0)
-    }
-    arr.toList
+    sort(list, Nil)
   }
 }
