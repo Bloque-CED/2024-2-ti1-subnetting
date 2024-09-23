@@ -1,23 +1,35 @@
-// countingsort.scala
-
 object CountingSort {
-  /**
-   * Counting sort implementation for non-negative integers.
-   * @param xs List of integers.
-   * @return Sorted list of integers.
-   */
-  def countingSort(xs: List[Int]): List[Int] = {
-    if (xs.isEmpty) return xs
-    val max = xs.max
-    val count = Array.fill(max + 1)(0)
-    xs.foreach(x => count(x) += 1)
+  
+  def countingSort(list: List[Int]): List[Int] = {
+    if (list.isEmpty) list
+    else {
+      val max = list.max
+      val min = list.min
+      val countArray = Array.fill(max - min + 1)(0)
 
-    val sortedList = for {
-      (n, freq) <- count.zipWithIndex
-      _ <- 1 to n
-    } yield freq
+      // Contar la frecuencia de cada elemento
+      @tailrec
+      def countElements(remaining: List[Int], counts: Array[Int]): Array[Int] = {
+        remaining match {
+          case Nil => counts
+          case head :: tail =>
+            counts(head - min) += 1
+            countElements(tail, counts)
+        }
+      }
 
-    sortedList.toList
+      // Generar la lista ordenada a partir del array de conteo
+      @tailrec
+      def buildSortedList(counts: Array[Int], currentIndex: Int, sortedList: List[Int]): List[Int] = {
+        if (currentIndex >= counts.length) sortedList
+        else {
+          val updatedList = List.fill(counts(currentIndex))(currentIndex + min) ::: sortedList
+          buildSortedList(counts, currentIndex + 1, updatedList)
+        }
+      }
+
+      val filledCounts = countElements(list, countArray)
+      buildSortedList(filledCounts, 0, Nil).reverse
+    }
   }
 }
-
