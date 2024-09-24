@@ -1,66 +1,63 @@
 import scala.annotation.tailrec
 
-
-//TODO: ask about max-heap and min-heap
-
 object HeapSort {
 
-  // Método general de HeapSort que puede ordenar de manera ascendente o descendente
-  def heapsort(list: List[Int], isMaxHeap: Boolean): List[Int] = {
-    val heapified = buildHeap(list, isMaxHeap)
-    sortHeap(heapified, isMaxHeap)
+  // Método de HeapSort de alto orden que recibe una función de comparación como parámetro
+  def heapsort(list: List[Int]): List[Int] = {
+    val heapified = buildMaxHeap(list, comparable)
+    sortHeap(heapified, comparable)
   }
 
-  // Construye un heap (MaxHeap o MinHeap según "isMaxHeap")
-  private def buildHeap(list: List[Int], isMaxHeap: Boolean): List[Int] = {
+  //
+  def comparable(a: Int, b: Int): Boolean = a < b
+
+  // Construye un MaxHeap usando la función de comparación
+  def buildMaxHeap(list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
+
     @tailrec
     def heapify(index: Int, currentList: List[Int]): List[Int] = {
-      index match {
-        case index if index < 0 => currentList
-        case index => heapify(index - 1, heapifyNode(index, currentList, isMaxHeap))
-      }
+      if (index < 0) currentList
+      else heapify(index - 1, maxHeapify(index, currentList, comparator))
     }
 
-    //First in execute before the heapify method with @tailrec
     heapify((list.length / 2) - 1, list)
   }
 
-  // Aplica MaxHeapify o MinHeapify dependiendo del valor de "isMaxHeap"
-  //TODO: Check the logic
-  private def heapifyNode(index: Int, list: List[Int], isMaxHeap: Boolean): List[Int] = {
-    val leftIndex = 2 * index + 1
-    val rightIndex = 2 * index + 2
-    val size = list.length
+  // Aplica MaxHeapify utilizando la función de comparación
+  def maxHeapify(index: Int, list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
+    val leftIndex = leftHeap(list, index)
+    val rightIndex = rightHeap(list, index)
 
-    val chosenIndex = (leftIndex < size, rightIndex < size) match {
+    val largestIndex = (leftIndex < list.length, rightIndex < list.length) match {
       case (true, true) =>
-        if (isMaxHeap) {
-          if (list(leftIndex) > list(index) && list(leftIndex) >= list(rightIndex)) leftIndex
-          else if (list(rightIndex) > list(index)) rightIndex
-          else index
+        if (comparator(list(leftIndex), list(index)) && comparator(list(leftIndex), list(rightIndex))){
+          leftIndex
+        } else if (comparator(list(rightIndex), list(index))){
+          rightIndex
         } else {
-          if (list(leftIndex) < list(index) && list(leftIndex) <= list(rightIndex)) leftIndex
-          else if (list(rightIndex) < list(index)) rightIndex
-          else index
+          index
         }
+
       case (true, false) =>
-        if (isMaxHeap) {
-          if (list(leftIndex) > list(index)) leftIndex else index
+        if (comparator(list(leftIndex), list(index))){
+          leftIndex
         } else {
-          if (list(leftIndex) < list(index)) leftIndex else index
+          index
         }
+
       case (false, true) =>
-        if (isMaxHeap) {
-          if (list(rightIndex) > list(index)) rightIndex else index
+        if (comparator(list(rightIndex), list(index))){
+          rightIndex
         } else {
-          if (list(rightIndex) < list(index)) rightIndex else index
+          index
         }
+
       case (false, false) => index
     }
 
-    if (chosenIndex != index) {
-      swap(list, index, chosenIndex) match {
-        case swappedList => heapifyNode(chosenIndex, swappedList, isMaxHeap)
+    if (largestIndex != index) {
+      swap(list, index, largestIndex) match {
+        case swappedList => maxHeapify(largestIndex, swappedList, comparator)
       }
     } else {
       list
@@ -68,8 +65,7 @@ object HeapSort {
   }
 
   // Intercambia dos elementos en la lista
-  //TODO: ask about pattern matching here
-  private def swap(list: List[Int], index1: Int, index2: Int): List[Int] = {
+  def swap(list: List[Int], index1: Int, index2: Int): List[Int] = {
     if (index1 == index2) list
     else {
       val elem1 = list(index1)
@@ -78,8 +74,9 @@ object HeapSort {
     }
   }
 
-  // Ordena el heap extraído
-  private def sortHeap(list: List[Int], isMaxHeap: Boolean): List[Int] = {
+  // Pasa del arbol a list nuevamente pero ya ordenado
+  def sortHeap(list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
+
     @tailrec
     def sort(currentList: List[Int], sortedList: List[Int]): List[Int] = {
       currentList match {
@@ -87,12 +84,20 @@ object HeapSort {
         case _ =>
           val swappedList = swap(currentList, 0, currentList.length - 1)
           val element = swappedList.last
-          val reducedHeap = heapifyNode(0, swappedList.init, isMaxHeap)
+          val reducedHeap = maxHeapify(0, swappedList.init, comparator)
 
           sort(reducedHeap, element :: sortedList)
       }
     }
 
     sort(list, Nil)
+  }
+
+  def leftHeap(list: List[Int], index: Int): Int = {
+    2 * index + 1
+  }
+
+  def rightHeap(list: List[Int], index: Int): Int = {
+    2 * index + 2
   }
 }
