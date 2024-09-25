@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="168fcf92-0684-40e4-bc68-25c872c49c91" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/src/main/scala/HeapSort.scala" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/src/main/scala/HeapSort.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/src/main/scala/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/src/main/scala/Main.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tareaintegradora1/doc/complexiti.md" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/doc/complexiti.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,8 +67,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555" />
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
@@ -85,6 +84,7 @@
       <workItem from="1727040249469" duration="104000" />
       <workItem from="1727040360442" duration="6308000" />
       <workItem from="1727117930086" duration="11959000" />
+      <workItem from="1727276988985" duration="5638000" />
     </task>
     <servers />
   </component>
