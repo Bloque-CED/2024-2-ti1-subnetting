@@ -1,17 +1,37 @@
 import scala.annotation.tailrec
 
+/**
+ * Object that implements the HeapSort algorithm for sorting a list of integers.
+ */
 object HeapSort {
 
-  // HeapSort method high order function that receives a comparison function as a parameter
-    def heapsort(list: List[Int]): List[Int] = {
+  /**
+   * Method to perform heap sort on a list of integers using a comparison function.
+   *
+   * @param list The list of integers to sort.
+   * @return The sorted list of integers.
+   */
+  def heapsort(list: List[Int]): List[Int] = {
     val heapified = buildMaxHeap(list, comparable)
     sortHeap(heapified, comparable)
   }
 
-  //
+  /**
+   * Comparison function to be used in heap sort. It compares two integers.
+   *
+   * @param a The first integer.
+   * @param b The second integer.
+   * @return True if the first integer is less than the second, false otherwise.
+   */
   def comparable(a: Int, b: Int): Boolean = a < b
 
-  //build a max heap using the comparison function
+  /**
+   * Builds a max heap from a list of integers using the given comparison function.
+   *
+   * @param list The list of integers to build the max heap from.
+   * @param comparator The comparison function.
+   * @return The list of integers arranged as a max heap.
+   */
   def buildMaxHeap(list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
 
     @tailrec
@@ -23,7 +43,14 @@ object HeapSort {
     heapify((list.length / 2) - 1, list)
   }
 
-  //apply MaxHeapify using the comparison function
+  /**
+   * Applies the max heapify operation on the list using the given comparison function.
+   *
+   * @param index The index to start heapifying from.
+   * @param list The list of integers to heapify.
+   * @param comparator The comparison function.
+   * @return The heapified list of integers.
+   */
   def maxHeapify(index: Int, list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
     val leftIndex = leftHeap(list, index)
     val rightIndex = rightHeap(list, index)
@@ -64,7 +91,14 @@ object HeapSort {
     }
   }
 
-  //exchange two elements in the list
+  /**
+   * Swaps two elements in the list at the given indices.
+   *
+   * @param list The list of integers.
+   * @param index1 The first index.
+   * @param index2 The second index.
+   * @return The list with the two elements swapped.
+   */
   def swap(list: List[Int], index1: Int, index2: Int): List[Int] = {
     if (index1 == index2) list
     else {
@@ -74,7 +108,13 @@ object HeapSort {
     }
   }
 
-  //from the tree to the list again but already sorted
+  /**
+   * Sorts the heap into a sorted list using the given comparison function.
+   *
+   * @param list The heapified list of integers.
+   * @param comparator The comparison function.
+   * @return The sorted list of integers.
+   */
   def sortHeap(list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
 
     @tailrec
@@ -93,10 +133,24 @@ object HeapSort {
     sort(list, Nil)
   }
 
+  /**
+   * Returns the index of the left child of a node in the heap.
+   *
+   * @param list The heap list.
+   * @param index The index of the current node.
+   * @return The index of the left child.
+   */
   def leftHeap(list: List[Int], index: Int): Int = {
     2 * index + 1
   }
 
+  /**
+   * Returns the index of the right child of a node in the heap.
+   *
+   * @param list The heap list.
+   * @param index The index of the current node.
+   * @return The index of the right child.
+   */
   def rightHeap(list: List[Int], index: Int): Int = {
     2 * index + 2
   }
