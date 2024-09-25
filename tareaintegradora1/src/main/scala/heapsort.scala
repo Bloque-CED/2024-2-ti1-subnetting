@@ -2,8 +2,8 @@ import scala.annotation.tailrec
 
 object HeapSort {
 
-  // Método de HeapSort de alto orden que recibe una función de comparación como parámetro
-  def heapsort(list: List[Int]): List[Int] = {
+  // HeapSort method high order function that receives a comparison function as a parameter
+    def heapsort(list: List[Int]): List[Int] = {
     val heapified = buildMaxHeap(list, comparable)
     sortHeap(heapified, comparable)
   }
@@ -11,7 +11,7 @@ object HeapSort {
   //
   def comparable(a: Int, b: Int): Boolean = a < b
 
-  // Construye un MaxHeap usando la función de comparación
+  //build a max heap using the comparison function
   def buildMaxHeap(list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
 
     @tailrec
@@ -23,7 +23,7 @@ object HeapSort {
     heapify((list.length / 2) - 1, list)
   }
 
-  // Aplica MaxHeapify utilizando la función de comparación
+  //apply MaxHeapify using the comparison function
   def maxHeapify(index: Int, list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
     val leftIndex = leftHeap(list, index)
     val rightIndex = rightHeap(list, index)
@@ -64,7 +64,7 @@ object HeapSort {
     }
   }
 
-  // Intercambia dos elementos en la lista
+  //exchange two elements in the list
   def swap(list: List[Int], index1: Int, index2: Int): List[Int] = {
     if (index1 == index2) list
     else {
@@ -74,7 +74,7 @@ object HeapSort {
     }
   }
 
-  // Pasa del arbol a list nuevamente pero ya ordenado
+  //from the tree to the list again but already sorted
   def sortHeap(list: List[Int], comparator: (Int, Int) => Boolean): List[Int] = {
 
     @tailrec
