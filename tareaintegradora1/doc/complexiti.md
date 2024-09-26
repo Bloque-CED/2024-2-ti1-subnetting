@@ -60,6 +60,83 @@ T(n) ≈ O(n log n)
 Esta expansión demuestra que la complejidad temporal del HeapSort es O(n log n).
 
 
+# Análisis de Complejidad del Counting Sort
+
+## Estructura del Algoritmo
+
+El Counting Sort implementado consta de las siguientes partes principales:
+
+1. `countingSort`: Función principal que orquesta el proceso de ordenamiento.
+2. `countElements`: Cuenta la frecuencia de cada elemento.
+3. `buildSortedList`: Genera la lista ordenada a partir del array de conteo.
+
+
+### 1. Encontrar el rango (dentro de countingSort)
+
+Complejidad: O(n)
+Esta fase requiere recorrer toda la lista una vez para encontrar el mínimo y el máximo.
+
+### 2. Contar elementos (dentro de countElements)
+Complejidad: O(n)
+Se recorre la lista de entrada una vez, incrementando los contadores correspondientes.
+
+### 3. Construir la lista ordenada (dentro de buildSortedList)
+Complejidad: O(n + k), donde k es el rango de los elementos (max - min + 1)
+Se recorre el array de conteo una vez, generando la lista ordenada.
+
+## Complejidad Total
+T(n) = O(n) + O(n) + O(n + k) = O(n + k)
+Donde:
+n es el número de elementos en la lista de entrada
+k es el rango de los elementos (max - min + 1)
+
+## Desarrollo de la Ecuación de Recurrencia
+
+Aunque el Counting Sort no tiene una ecuación de recurrencia global tradicional como
+T(n) = aT(n/b) + f(n), podemos analizar  la complejidad en sus componentes recursivos:
+
+1. Para `countElements`:
+
+   T(n) = T(n-1) + O(1)
+   = [T(n-2) + O(1)] + O(1)
+   = [T(n-3) + O(1)] + O(1) + O(1)
+   ...
+   = T(1) + (n-1) * O(1)
+   = O(n)
+
+   Esta ecuación se resuelve a O(n)
+
+2. Para `buildSortedList`:
+
+   T(k) = T(k-1) + O(n/k)
+   = [T(k-2) + O(n/(k-1))] + O(n/k)
+   = [T(k-3) + O(n/(k-2))] + O(n/(k-1)) + O(n/k)
+   ...
+   = T(1) + O(n/1) + O(n/2) + ... + O(n/k)
+   = O(n * (1/1 + 1/2 + ... + 1/k))
+   = O(n * log(k))
+   ≈ O(n + k)  
+
+   Donde k es el rango de los elementos 
+y n/k es el número promedio de elementos por valor único.
+
+3. Complejidad total:
+
+   T(n) = O(n) + O(n) + O(n + k)
+   = O(n + k)
+
+   Donde:
+    - El primer O(n) proviene de encontrar el rango (max y min)
+    - El segundo O(n) proviene de contar los elementos
+    - O(n + k) proviene de construir la lista ordenada
+
+Por lo tanto, la complejidad total del Counting Sort es O(n + k),
+donde n es el número de elementos y k es el rango de los valores.
+
+
+
+
+
 
 
 
