@@ -134,6 +134,68 @@ Por lo tanto, la complejidad total del Counting Sort es O(n + k),
 donde n es el número de elementos y k es el rango de los valores.
 
 
+# Análisis de Complejidad del Radix Sort
+
+## Estructura del Algoritmo
+
+El Radix Sort tiene las siguientes partes principales:
+
+1. `radixSort`: Función principal que orquesta el proceso de ordenamiento.
+2. `sortAtDigit`: Función recursiva que aplica el ordenamiento para cada dígito.
+3. `countingSortByDigit`: Función que realiza el ordenamiento por conteo para un dígito específico.
+
+## Complejidad
+
+La complejidad del Radix Sort implementado se puede expresar como:
+
+T(n) = d * O(n + b)
+
+Donde:
+- d es el número de dígitos en el número más grande
+- n es el número de elementos en la lista
+- b es la base del sistema numérico que en este caso es 10
+
+### Análisis detallado:
+
+1. Encontrar el máximo: O(n)
+2. Para cada dígito (d veces):
+    - Distribución a cubos: O(n)
+    - Recolección de cubos: O(n)
+
+Por lo tanto, la complejidad total es: O(n + d(n + b)) = O(d(n + b))
+
+## Ecuación de Recurrencia
+
+La ecuación de recurrencia para este Radix Sort puede expresarse como:
+
+T(n) = d * (n + b)
+
+Donde:
+- d es el número de dígitos en el número más grande
+- n es el número de elementos en la lista
+- b es la base del sistema numérico (10 en este caso)
+
+ Radix Sort no divide el problema en subproblemas más pequeños de la misma naturaleza.
+ En su lugar, realiza d pasadas sobre los n elementos.
+
+## Desarrollo de la Ecuación de Complejidad
+
+Expandiendo la ecuación:
+
+T(n) = d * (n + b)
+= d * n + d * b
+
+Dado que b es una constante (10 en este caso), podemos simplificar:
+
+T(n) = O(d * n)
+
+El valor de d depende del rango de los números en la lista:
+1. Si los números están en un rango fijo (por ejemplo, 0 a 999),
+d es constante y T(n) = O(n)
+2. Si d es logarítmico en relación a n (por ejemplo, números hasta n),
+entonces T(n) = O(n log n)
+3. En el peor caso, donde d es proporcional a n, T(n) = O(n^2)
+
 
 
 
