@@ -26,7 +26,6 @@ object RadixSort {
    * @param num The integer to count the digits.
    * @return The number of digits.
    */
-  @tailrec
   def countDigits(num: Int, acc: Int = 0): Int = {
     if (num == 0 && acc > 0) acc
     else countDigits(num / 10, acc + 1)
@@ -39,37 +38,44 @@ object RadixSort {
    * @param maxDigits The maximum number of digits in the largest number.
    * @return The sorted list of integers.
    */
-  def radixSortHelper(list: List[Int], digit: Int): List[Int] = {
+  @tailrec
+  def sortByDigit(list: List[Int], digit: Int): List[Int] = {
     if (digit == 0) list
     else {
       val emptyBuckets = Array.fill(10)(List.empty[Int])
 
-      @tailrec
-      def fillBuckets(numbers: List[Int], buckets: Array[List[Int]]): Array[List[Int]] = {
-        numbers match {
-          case Nil => buckets
-          case head :: tail =>
-            val digitValue = getDigit(head, digit - 1)
-            buckets(digitValue) = head :: buckets(digitValue)
-            fillBuckets(tail, buckets)
-        }
-      }
+      // Fill buckets for the current digit
+      val filledBuckets = fillBuckets(list, emptyBuckets, digit - 1)
 
-      @tailrec
-      def flattenBuckets(buckets: Array[List[Int]], result: List[Int] = List.empty): List[Int] = {
-        if (buckets.isEmpty) result
-        else flattenBuckets(buckets.tail, buckets.head.reverse ::: result)
-      }
-
-      val filledBuckets = fillBuckets(list, emptyBuckets)
-      val flattenedList = flattenBuckets(filledBuckets)
-
-      radixSortHelper(flattenedList, digit - 1)
+      // Flatten the buckets into a single list and recurse for the next digit
+      sortByDigit(flattenBuckets(filledBuckets), digit - 1)
     }
   }
 
-  def sortByDigit(list: List[Int], maxDigits: Int): List[Int] = {
-    radixSortHelper(list, maxDigits)
+  /**
+   * Fills the buckets based on the current digit value.
+   *
+   * @param numbers The list of numbers to distribute into buckets.
+   * @param buckets The array of buckets to fill.
+   * @param index The index of the current digit being processed.
+   * @return The filled buckets.
+   */
+  private def fillBuckets(numbers: List[Int], buckets: Array[List[Int]], index: Int): Array[List[Int]] = {
+    numbers.foreach { num =>
+      val digitValue = getDigit(num, index)
+      buckets(digitValue) = num :: buckets(digitValue)
+    }
+    buckets
+  }
+
+  /**
+   * Flattens the filled buckets into a single sorted list.
+   *
+   * @param buckets The array of filled buckets.
+   * @return A flattened list containing all elements from the buckets.
+   */
+  private def flattenBuckets(buckets: Array[List[Int]]): List[Int] = {
+    buckets.flatten.toList
   }
 
   /**
