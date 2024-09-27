@@ -48,7 +48,7 @@ object RadixSort {
     else {
       val emptyBuckets = Array.fill(10)(List.empty[Int])
 
-      // Recorrer la lista y actualizar los buckets en una sola pasada
+      // go through the list and put each number in the corresponding bucket
       @tailrec
       def fillBuckets(numbers: List[Int], buckets: Array[List[Int]]): Array[List[Int]] = {
         numbers match {
@@ -60,7 +60,7 @@ object RadixSort {
         }
       }
 
-      // Llenar los buckets y luego aplanar en una sola pasada
+      // fill the buckets and flatten the list
       @tailrec
       def flattenBuckets(buckets: Array[List[Int]], result: List[Int] = List.empty): List[Int] = {
         if (buckets.isEmpty) result
@@ -70,7 +70,7 @@ object RadixSort {
       val filledBuckets = fillBuckets(list, emptyBuckets)
       val flattenedList = flattenBuckets(filledBuckets)
 
-      // Llamada recursiva de cola para el siguiente dígito
+      // call the method recursively with the next digit
       sortByDigit(flattenedList, digit - 1)
     }
   }
