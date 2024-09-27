@@ -12,9 +12,13 @@ object CountingSort {
    * @return The sorted list of integers.
    */
   def countingsort(list: List[Int]): List[Int] = {
+    // Verify that the list only contains non-negative integers
+    if (list.exists(_ < 0)) {
+      throw new IllegalArgumentException("CountingSort only works with non-negative integers.")
+    }
+
     if (list.isEmpty) list
     else {
-      // Obtenemos el valor máximo de la lista solo dentro de esta función
       val maxElement = list.max
       val counts = buildCountArray(list, maxElement)
       reconstructSortedList(counts)
@@ -29,12 +33,8 @@ object CountingSort {
    * @return An array representing the frequency of each element.
    */
   def buildCountArray(list: List[Int], maxElement: Int): Array[Int] = {
-    // Inicializar un array de conteo con el tamaño adecuado
     val counts = Array.fill(maxElement + 1)(0)
-
-    // Llenar el array con las frecuencias de los elementos
     list.foreach { num => counts(num) += 1 }
-
     counts
   }
 
@@ -49,12 +49,10 @@ object CountingSort {
     def buildList(index: Int, acc: List[Int]): List[Int] = {
       if (index >= counts.length) acc
       else if (counts(index) > 0)
-        buildList(index, acc ++ List.fill(counts(index))(index)) // Agregar ocurrencias del número
+        buildList(index + 1, List.fill(counts(index))(index) ++ acc) //change the concatenation to the beginning
       else
-        buildList(index + 1, acc) // Avanzar al siguiente índice
+        buildList(index + 1, acc)
     }
-
-    buildList(0, List())
+    buildList(0, List()).reverse //revert the list to keep the order
   }
 }
-
