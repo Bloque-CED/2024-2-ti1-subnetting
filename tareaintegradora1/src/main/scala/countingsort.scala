@@ -14,6 +14,7 @@ object CountingSort {
   def countingsort(list: List[Int]): List[Int] = {
     if (list.isEmpty) list
     else {
+      // Obtenemos el valor máximo de la lista solo dentro de esta función
       val maxElement = list.max
       val counts = buildCountArray(list, maxElement)
       reconstructSortedList(counts)
@@ -24,15 +25,17 @@ object CountingSort {
    * Builds the count array that stores the frequency of each element in the list.
    *
    * @param list The list of integers.
-   * @param max The maximum value in the list.
-   * @return A list representing the frequency of each element.
+   * @param maxElement The maximum value in the list.
+   * @return An array representing the frequency of each element.
    */
-  @tailrec
-  def buildCountArray(list: List[Int], max: Int, counts: List[Int] = List.fill(max + 1)(0)): List[Int] = list match {
-    case Nil => counts
-    case x :: xs =>
-      val updatedCounts = counts.updated(x, counts(x) + 1)
-      buildCountArray(xs, max, updatedCounts)
+  def buildCountArray(list: List[Int], maxElement: Int): Array[Int] = {
+    // Inicializar un array de conteo con el tamaño adecuado
+    val counts = Array.fill(maxElement + 1)(0)
+
+    // Llenar el array con las frecuencias de los elementos
+    list.foreach { num => counts(num) += 1 }
+
+    counts
   }
 
   /**
@@ -41,12 +44,17 @@ object CountingSort {
    * @param counts The count array.
    * @return The sorted list of integers.
    */
-  @tailrec
-  def reconstructSortedList(counts: List[Int], sortedList: List[Int] = List()): List[Int] = counts match {
-    case Nil => sortedList
-    case 0 :: tail => reconstructSortedList(tail, sortedList)
-    case count :: tail =>
-      val newList = List.fill(count)(counts.indexOf(count)) ::: sortedList
-      reconstructSortedList(tail, newList)
+  def reconstructSortedList(counts: Array[Int]): List[Int] = {
+    @tailrec
+    def buildList(index: Int, acc: List[Int]): List[Int] = {
+      if (index >= counts.length) acc
+      else if (counts(index) > 0)
+        buildList(index, acc ++ List.fill(counts(index))(index)) // Agregar ocurrencias del número
+      else
+        buildList(index + 1, acc) // Avanzar al siguiente índice
+    }
+
+    buildList(0, List())
   }
 }
+

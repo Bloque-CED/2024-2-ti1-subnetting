@@ -13,6 +13,12 @@ object Main {
 
     val sortedList = RadixSort.radixsort(list)
     println(s"Radix Sorted List: $sortedList")
+    println(sortedList.size)
+
+    val countingSort = CountingSort.countingsort(list)
+    println(s"Counting Sorted List: $countingSort")
+    println(countingSort.size)
+
 
   }
 }
