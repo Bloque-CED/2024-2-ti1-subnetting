@@ -10,5 +10,9 @@ object Main {
     val heapSort = HeapSort.heapsort(list)
     println(s"Heap Sorted List: $heapSort")
     println(heapSort.size)
+
+    val sortedList = RadixSort.radixsort(list)
+    println(s"Radix Sorted List: $sortedList")
+
   }
 }
