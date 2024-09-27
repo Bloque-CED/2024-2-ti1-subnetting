@@ -1,7 +1,7 @@
 import scala.annotation.tailrec
 
 /**
- * Object that implements the RadixSort algorithm for sorting a list of integers.
+ * Object that implements the RadixSort algorithm for sorting a list of integers with a single tail recursion.
  */
 object RadixSort {
 
@@ -16,7 +16,7 @@ object RadixSort {
     else {
       val maxNum = list.max
       val maxDigits = countDigits(maxNum)
-      sortByDigit(list, 0, maxDigits)
+      sortByDigit(list, maxDigits)
     }
   }
 
@@ -26,52 +26,53 @@ object RadixSort {
    * @param num The integer to count the digits.
    * @return The number of digits.
    */
-  @tailrec
-  def countDigits(num: Int, count: Int = 0): Int = {
-    if (num == 0 && count > 0) count
-    else countDigits(num / 10, count + 1)
+  def countDigits(num: Int): Int = {
+    @tailrec
+    def count(num: Int, acc: Int): Int = {
+      if (num == 0 && acc > 0) acc
+      else count(num / 10, acc + 1)
+    }
+    count(num, 0)
   }
 
   /**
-   * Sorts the list by each digit starting from the least significant digit.
+   * Sorts the list by processing each digit using a single tail recursion.
    *
    * @param list The list of integers to sort.
-   * @param currentDigit The current digit index to sort by.
    * @param maxDigits The maximum number of digits in the largest number.
    * @return The sorted list of integers.
    */
   @tailrec
-  def sortByDigit(list: List[Int], currentDigit: Int, maxDigits: Int): List[Int] = {
-    if (currentDigit >= maxDigits) list
+  def sortByDigit(list: List[Int], digit: Int): List[Int] = {
+    if (digit == 0) list
     else {
-      val buckets = createBuckets(list, currentDigit)
-      val flattenedList = buckets.flatten
-      sortByDigit(flattenedList, currentDigit + 1, maxDigits)
-    }
-  }
+      val emptyBuckets = Array.fill(10)(List.empty[Int])
 
-  /**
-   * Creates buckets for each digit (0-9) based on the current digit index.
-   *
-   * @param list The list of integers to bucket.
-   * @param digitIndex The current digit index to use for bucketing.
-   * @return A list of lists, where each sublist contains numbers in the same bucket.
-   */
-  def createBuckets(list: List[Int], digitIndex: Int): List[List[Int]] = {
-    val emptyBuckets = List.fill(10)(List.empty[Int])
-
-    @tailrec
-    def fillBuckets(numbers: List[Int], buckets: List[List[Int]]): List[List[Int]] = {
-      numbers match {
-        case Nil => buckets
-        case head :: tail =>
-          val digit = getDigit(head, digitIndex)
-          val updatedBuckets = buckets.updated(digit, head :: buckets(digit))
-          fillBuckets(tail, updatedBuckets)
+      // Recorrer la lista y actualizar los buckets en una sola pasada
+      @tailrec
+      def fillBuckets(numbers: List[Int], buckets: Array[List[Int]]): Array[List[Int]] = {
+        numbers match {
+          case Nil => buckets
+          case head :: tail =>
+            val digitValue = getDigit(head, digit - 1)
+            buckets(digitValue) = head :: buckets(digitValue)
+            fillBuckets(tail, buckets)
+        }
       }
-    }
 
-    fillBuckets(list, emptyBuckets).map(_.reverse)
+      // Llenar los buckets y luego aplanar en una sola pasada
+      @tailrec
+      def flattenBuckets(buckets: Array[List[Int]], result: List[Int] = List.empty): List[Int] = {
+        if (buckets.isEmpty) result
+        else flattenBuckets(buckets.tail, buckets.head.reverse ::: result)
+      }
+
+      val filledBuckets = fillBuckets(list, emptyBuckets)
+      val flattenedList = flattenBuckets(filledBuckets)
+
+      // Llamada recursiva de cola para el siguiente dígito
+      sortByDigit(flattenedList, digit - 1)
+    }
   }
 
   /**
