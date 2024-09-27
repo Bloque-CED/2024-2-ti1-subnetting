@@ -4,9 +4,10 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "tareaIntegradora1",
-    version := "0.1.0-SNAPSHOT",
-
-    scalaVersion := scala3Version,
-
-    libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
+    version := "0.1",
+    scalaVersion := "3.5.0",
+    libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest" % "3.2.16" % "test",
+      "org.scalameta" %% "munit" % "0.7.29" % "test"
+    )
   )
