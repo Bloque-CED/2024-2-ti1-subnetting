@@ -42,7 +42,12 @@ object RadixSort {
   def sortByDigit(list: List[Int], digit: Int): List[Int] = {
     if (digit == 0) list
     else {
-      val emptyBuckets = Array.fill(10)(List.empty[Int])
+      // Create empty buckets as lists for each digit (0-9)
+      val emptyBuckets = Array(
+        List.empty[Int], List.empty[Int], List.empty[Int], List.empty[Int],
+        List.empty[Int], List.empty[Int], List.empty[Int], List.empty[Int],
+        List.empty[Int], List.empty[Int]
+      )
 
       // Fill buckets for the current digit
       val filledBuckets = fillBuckets(list, emptyBuckets, digit - 1)
