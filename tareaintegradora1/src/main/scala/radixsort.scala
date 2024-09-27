@@ -26,13 +26,10 @@ object RadixSort {
    * @param num The integer to count the digits.
    * @return The number of digits.
    */
-  def countDigits(num: Int): Int = {
-    @tailrec
-    def count(num: Int, acc: Int): Int = {
-      if (num == 0 && acc > 0) acc
-      else count(num / 10, acc + 1)
-    }
-    count(num, 0)
+  @tailrec
+  def countDigits(num: Int, acc: Int = 0): Int = {
+    if (num == 0 && acc > 0) acc
+    else countDigits(num / 10, acc + 1)
   }
 
   /**
@@ -42,13 +39,11 @@ object RadixSort {
    * @param maxDigits The maximum number of digits in the largest number.
    * @return The sorted list of integers.
    */
-  @tailrec
-  def sortByDigit(list: List[Int], digit: Int): List[Int] = {
+  def radixSortHelper(list: List[Int], digit: Int): List[Int] = {
     if (digit == 0) list
     else {
       val emptyBuckets = Array.fill(10)(List.empty[Int])
 
-      // go through the list and put each number in the corresponding bucket
       @tailrec
       def fillBuckets(numbers: List[Int], buckets: Array[List[Int]]): Array[List[Int]] = {
         numbers match {
@@ -60,7 +55,6 @@ object RadixSort {
         }
       }
 
-      // fill the buckets and flatten the list
       @tailrec
       def flattenBuckets(buckets: Array[List[Int]], result: List[Int] = List.empty): List[Int] = {
         if (buckets.isEmpty) result
@@ -70,9 +64,12 @@ object RadixSort {
       val filledBuckets = fillBuckets(list, emptyBuckets)
       val flattenedList = flattenBuckets(filledBuckets)
 
-      // call the method recursively with the next digit
-      sortByDigit(flattenedList, digit - 1)
+      radixSortHelper(flattenedList, digit - 1)
     }
+  }
+
+  def sortByDigit(list: List[Int], maxDigits: Int): List[Int] = {
+    radixSortHelper(list, maxDigits)
   }
 
   /**
