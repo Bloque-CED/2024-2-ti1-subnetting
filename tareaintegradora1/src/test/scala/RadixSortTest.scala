@@ -1,7 +1,9 @@
-import org.scalatest.funsuite.AnyFunSuite
+
+import munit.FunSuite
 import RadixSort
 
-class RadixSortTest extends AnyFunSuite {
+class RadixSortTest extends FunSuite {
+
   test("RadixSort should sort an empty list") {
     val list = List()
     val sortedList = RadixSort.radixSort(list)
@@ -43,4 +45,8 @@ class RadixSortTest extends AnyFunSuite {
     val sortedList = RadixSort.radixSort(list)
     assert(sortedList == List(1, 50, 500000, 999999, 1000000))
   }
+
+
+
+
 }
