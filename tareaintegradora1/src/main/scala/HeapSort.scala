@@ -23,7 +23,7 @@ object HeapSort {
    * @param b The second integer.
    * @return True if the first integer is less than the second, false otherwise.
    */
-  def comparable(a: Int, b: Int): Boolean = a < b
+  def comparable(a: Int, b: Int): Boolean = a > b
 
   /**
    * Builds a max heap from a list of integers using the given comparison function.

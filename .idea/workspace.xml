@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="168fcf92-0684-40e4-bc68-25c872c49c91" name="Changes" comment="names">
+      <change beforePath="$PROJECT_DIR$/.idea/2024-2-ti1-subnetting.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/2024-2-ti1-subnetting.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/src/test/scala/CountingSortTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/src/test/scala/CountingSortTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/src/test/scala/HeapSortTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/src/test/scala/HeapSortTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/src/test/scala/RadixSortTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/src/test/scala/RadixSortTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tareaintegradora1/src/main/scala/HeapSort.scala" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/src/main/scala/HeapSort.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +48,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propCompiler",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
