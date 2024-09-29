@@ -1,3 +1,5 @@
+package test.scala
+
 import munit.FunSuite
 import HeapSort
 
