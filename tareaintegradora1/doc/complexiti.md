@@ -122,9 +122,112 @@ Complejidad total: O(n * n log n) = O(n² log n)
 
 Complejidad total de HeapSort: O(n² log n)
 
-# Complejidad para QuickSort
 
-      
+ # Complejidad para CountingSort
+
+1. Función buildCountArray
+
+    val counts = Array.fill(maxElement + 1)(0)
+Complejidad: O(k)
+Operación: Asignación de memoria y llenado del array.
+
+ list.foreach { num => counts(num) += 1 }
+Complejidad: O(n)
+Operación: Para cada elemento, acceso y actualización en el array counts (O(1) cada uno).
+
+ counts
+Complejidad: O(1)
+Operación: Devolución de la referencia al array.
+
+Complejidad total de buildCountArray:
+Complejidad: O(n + k)
+Donde:
+n es el número de elementos en la lista list.
+k es el rango de valores posibles (el valor máximo en list más uno).
+
+
+2. Función reconstructSortedList
+   Define la función recursiva buildList(index: Int, acc: List[Int]): List[Int]
+Complejidad: Depende de las llamadas recursivas.
+Operación: Definición de la función interna.
+
+ if (index >= counts.length) acc
+Complejidad: O(1)
+Operación: Comparación y retorno.
+
+ else if (counts(index) > 0)
+Complejidad: O(1)
+Operación: Acceso al array counts y comparación.
+
+ buildList(index + 1, List.fill(counts(index))(index) ++ acc)
+Complejidad de List.fill(counts(index))(index): O(m)
+Donde: m = counts(index)
+Operación: Generación de una lista con elementos repetidos.
+Complejidad de List.fill(...)(...) ++ acc: O(m)
+Operación: Concatenación de dos listas.
+Complejidad total de esta rama: O(m + m) = O(2m) = O(m)
+
+ buildList(index + 1, acc)
+Complejidad: O(1)
+Operación: Incremento del índice y llamada recursiva.
+
+Recursión:
+Número de llamadas recursivas: k, donde k = counts.length
+Complejidad total de la función recursiva:
+La suma de todas las operaciones O(m) en las posiciones donde counts(index) > 0.
+La suma total de m es igual a n, el número total de elementos en la lista original.
+
+ buildList(0, List()).reverse
+Complejidad de reverse: O(n)
+Operación: Recorrido de la lista para invertirla.
+
+
+Complejidad total de reconstructSortedList:
+Complejidad: O(n + k)
+Las operaciones en total suman O(n) debido a las posiciones donde counts(index) > 0.
+Se agrega O(k) por el número de llamadas recursivas.
+La operación reverse agrega O(n).
+
+
+3. Función countingsort
+
+    if (list.exists(_ < 0))
+Complejidad: O(n)
+Operación: Evaluación de la condición para cada elemento.
+
+Lanzamiento de excepción si hay elementos negativos.
+Complejidad: O(1)
+Operación: Lanzamiento de excepción (no afecta la complejidad general si se asume que la lista es válida).
+
+ if (list.isEmpty) list
+Complejidad: O(1)
+Operación: Comprobación y retorno.
+
+ val maxElement = list.max
+Complejidad: O(n)
+Operación: Recorrido completo de la lista.
+
+ val counts = buildCountArray(list, maxElement)
+Complejidad: O(n + k)
+
+reconstructSortedList(counts)
+Complejidad: O(n + k)
+
+Complejidad total de countingsort:
+Suma de las operaciones:
+Verificación de elementos negativos: O(n)
+Verificación de lista vacía: O(1)
+Encontrar el elemento máximo: O(n)
+Construcción del array de conteo: O(n + k)
+Reconstrucción de la lista ordenada: O(n + k)
+
+Complejidad total:
+O(n + k)
+
+
+
+
+
 
 
 
