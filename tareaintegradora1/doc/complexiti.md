@@ -1,202 +1,130 @@
 # Complejidad para HeapSort
 
-El HeapSort implementado consta de las siguientes partes principales:
+1. Función comparable
+   Complejidad: O(1)
+   Operaciones: Una operación de comparación.
+2. Función leftHeap
+    Complejidad: O(1)
+    Operaciones: Una operación de multiplicación y una de suma.
+3. Función rightHeap
+    Complejidad: O(1)
+    Operaciones: Una operación de multiplicación y una de suma.
+   4. Función swap
+      if (index1 == index2) list
+       Complejidad: O(1)
+      val elem1 = list(index1)
+      Complejidad: O(n)
+      val elem2 = list(index2)
+       Complejidad: O(n)
+      list.updated(index1, elem2)
+       Complejidad: O(n)
+      .updated(index2, elem1)
+       Complejidad: O(n)
+      Complejidad total de swap: O(n)
+
+   5. Función maxHeapify
 
-1. `heapsort`: Función principal que orquesta el proceso de ordenamiento.
-2. `buildMaxHeap`: Construye el heap máximo inicial.
-3. `maxHeapify`: Mantiene la propiedad de heap máximo.
-4. `sortHeap`: Extrae repetidamente el elemento máximo y reordena el heap.
 
-### 1. Construcción del Heap (buildMaxHeap)
-Complejidad: O(n)
-Aunque parece que debería ser O(n log n) debido a las n/2 llamadas a maxHeapify,
-cada una con complejidad O(log n), en realidad es más eficiente. 
-Esto se debe a que la mayoría de los nodos están en la parte inferior del árbol 
-y requieren poco o ningún trabajo. Por lo tanto, la complejidad es O(n).
+ val leftIndex = leftHeap(list, index)
+Complejidad de leftHeap: O(1)
 
-### 2. Mantenimiento del Heap (maxHeapify)
-Complejidad: O(log n)
-Esta función mantiene la propiedad de heap máximo.
-En el peor caso, un elemento puede "hundirse" desde la raíz hasta una hoja, 
-lo que implica una altura de log n.
+ val rightIndex = rightHeap(list, index)
+Complejidad de rightHeap: O(1)
 
-### 3. Ordenamiento del Heap (sortHeap)
-Complejidad: O(n log n)
-Esta función realiza n extracciones,
-cada una seguida de un maxHeapify. 
-Cada extracción es O(1) y cada maxHeapify es O(log n), 
-resultando en una complejidad total de O(n log n).
+ Determinación de largestIndex
+Comparaciones y accesos:
+Accesos a list(index), list(leftIndex), list(rightIndex)
+Cada acceso es O(n) en List.
+Número de accesos: Hasta 3
 
-## Ecuación de Recurrencia
+Total complejidad de accesos: O(n) * número de accesos = O(n)
 
-La relación de recurrencia para el tiempo de ejecución T(n) del algoritmo HeapSort puede expresarse como:
 
-T(n) = T(n-1) + O(log n)
+Comparaciones con comparator:
 
-Donde:
-- T(n-1) representa la llamada recursiva para ordenar el heap reducido.
-- O(log n) representa la complejidad de maxHeapify en cada iteración.
+Complejidad: O(1) por comparación.
+Número de comparaciones: Hasta 3
 
-## Desarrollo de la Ecuación de Recurrencia
+ if (largestIndex != index)
+Complejidad: O(1)
 
-Expandiendo la ecuación:
+ Realiza un swap y llamada recursiva a maxHeapify
+Complejidad de swap: O(n)
 
-T(n) = T(n-1) + O(log n)
-= [T(n-2) + O(log(n-1))] + O(log n)
-= [T(n-3) + O(log(n-2))] + O(log(n-1)) + O(log n)
-...
-= T(1) + O(log 2) + O(log 3) + ... + O(log(n-1)) + O(log n)
-= O(1) + O(log 2 + log 3 + ... + log(n-1) + log n)
-= O(log(n!))
+Llamada recursiva a maxHeapify:
+Máximo número de llamadas recursivas: O(log n)
 
-Utilizando la aproximación de Stirling para n!, sabemos que:
+ else list
+Complejidad: O(1)
 
-log(n!) ≈ n log n - n + O(log n)
+Complejidad total de maxHeapify:
 
-Por lo tanto:
+En el peor caso:
 
-T(n) ≈ O(n log n)
+Número de llamadas recursivas: O(log n)
+Operaciones por llamada:
+Accesos a elementos: O(n)
+Comparaciones: O(1)
+Swap: O(n)
+Complejidad por llamada: O(n)
+Complejidad total: O(n log n)
 
-Esta expansión demuestra que la complejidad temporal del HeapSort es O(n log n).
 
+ 6. Función buildMaxHeap
+     heapify((list.length / 2) - 1, list)
+ Inicialización del índice: O(1)
 
-# Análisis de Complejidad del Counting Sort
+   Función interna heapify:
+Número de llamadas: O(n)
+En cada llamada:
+if (index < 0) currentList
+Complejidad: O(1)
 
-## Estructura del Algoritmo
+ else heapify(index - 1, maxHeapify(index, currentList, comparator))
+Llama a maxHeapify:
+Complejidad de maxHeapify: O(n log n) 
 
-El Counting Sort implementado consta de las siguientes partes principales:
+Complejidad total de buildMaxHeap:
+Número de llamadas a maxHeapify: O(n)
+Complejidad por llamada a maxHeapify: O(n log n)
+Complejidad total: O(n * n log n) = O(n² log n)
 
-1. `countingSort`: Función principal que orquesta el proceso de ordenamiento.
-2. `countElements`: Cuenta la frecuencia de cada elemento.
-3. `buildSortedList`: Genera la lista ordenada a partir del array de conteo.
+7. Función sortHeap
+   Función interna sort:
+Número de llamadas: O(n)
+En cada llamada:
+ currentList match { ... }
+Patrón de coincidencia: O(1)
 
+ val swappedList = swap(currentList, 0, currentList.length - 1)
+Complejidad de swap: O(n)
 
-### 1. Encontrar el rango (dentro de countingSort)
+ val element = swappedList.last
+Acceso al último elemento en una List: O(n)
 
-Complejidad: O(n)
-Esta fase requiere recorrer toda la lista una vez para encontrar el mínimo y el máximo.
+ val reducedHeap = maxHeapify(0, swappedList.init, comparator)
+Complejidad de maxHeapify: O(n log n)
 
-### 2. Contar elementos (dentro de countElements)
-Complejidad: O(n)
-Se recorre la lista de entrada una vez, incrementando los contadores correspondientes.
+ Llamada recursiva a sort
+Complejidad: Depende de las operaciones anteriores.
 
-### 3. Construir la lista ordenada (dentro de buildSortedList)
-Complejidad: O(n + k), donde k es el rango de los elementos (max - min + 1)
-Se recorre el array de conteo una vez, generando la lista ordenada.
 
-## Complejidad Total
-T(n) = O(n) + O(n) + O(n + k) = O(n + k)
-Donde:
-n es el número de elementos en la lista de entrada
-k es el rango de los elementos (max - min + 1)
+Complejidad total de sortHeap:
+Número de llamadas: O(n)
+Complejidad por llamada: O(n log n)
+(Debido a swap, acceso a last, y maxHeapify)
+Complejidad total: O(n * n log n) = O(n² log n)
 
-## Desarrollo de la Ecuación de Recurrencia
+8. Función heapSort
+   Complejidad de buildMaxHeap: O(n² log n)
+   Complejidad de sortHeap: O(n² log n)
+   Complejidad total: O(n² log n)
 
-Aunque el Counting Sort no tiene una ecuación de recurrencia global tradicional como
-T(n) = aT(n/b) + f(n), podemos analizar  la complejidad en sus componentes recursivos:
+Complejidad total de HeapSort: O(n² log n)
 
-1. Para `countElements`:
+# Complejidad para QuickSort
 
-   T(n) = T(n-1) + O(1)
-   = [T(n-2) + O(1)] + O(1)
-   = [T(n-3) + O(1)] + O(1) + O(1)
-   ...
-   = T(1) + (n-1) * O(1)
-   = O(n)
-
-   Esta ecuación se resuelve a O(n)
-
-2. Para `buildSortedList`:
-
-   T(k) = T(k-1) + O(n/k)
-   = [T(k-2) + O(n/(k-1))] + O(n/k)
-   = [T(k-3) + O(n/(k-2))] + O(n/(k-1)) + O(n/k)
-   ...
-   = T(1) + O(n/1) + O(n/2) + ... + O(n/k)
-   = O(n * (1/1 + 1/2 + ... + 1/k))
-   = O(n * log(k))
-   ≈ O(n + k)  
-
-   Donde k es el rango de los elementos 
-y n/k es el número promedio de elementos por valor único.
-
-3. Complejidad total:
-
-   T(n) = O(n) + O(n) + O(n + k)
-   = O(n + k)
-
-   Donde:
-    - El primer O(n) proviene de encontrar el rango (max y min)
-    - El segundo O(n) proviene de contar los elementos
-    - O(n + k) proviene de construir la lista ordenada
-
-Por lo tanto, la complejidad total del Counting Sort es O(n + k),
-donde n es el número de elementos y k es el rango de los valores.
-
-
-# Análisis de Complejidad del Radix Sort
-
-## Estructura del Algoritmo
-
-El Radix Sort tiene las siguientes partes principales:
-
-1. `radixSort`: Función principal que orquesta el proceso de ordenamiento.
-2. `sortAtDigit`: Función recursiva que aplica el ordenamiento para cada dígito.
-3. `countingSortByDigit`: Función que realiza el ordenamiento por conteo para un dígito específico.
-
-## Complejidad
-
-La complejidad del Radix Sort implementado se puede expresar como:
-
-T(n) = d * O(n + b)
-
-Donde:
-- d es el número de dígitos en el número más grande
-- n es el número de elementos en la lista
-- b es la base del sistema numérico que en este caso es 10
-
-### Análisis detallado:
-
-1. Encontrar el máximo: O(n)
-2. Para cada dígito (d veces):
-    - Distribución a cubos: O(n)
-    - Recolección de cubos: O(n)
-
-Por lo tanto, la complejidad total es: O(n + d(n + b)) = O(d(n + b))
-
-## Ecuación de Recurrencia
-
-La ecuación de recurrencia para este Radix Sort puede expresarse como:
-
-T(n) = d * (n + b)
-
-Donde:
-- d es el número de dígitos en el número más grande
-- n es el número de elementos en la lista
-- b es la base del sistema numérico (10 en este caso)
-
- Radix Sort no divide el problema en subproblemas más pequeños de la misma naturaleza.
- En su lugar, realiza d pasadas sobre los n elementos.
-
-## Desarrollo de la Ecuación de Complejidad
-
-Expandiendo la ecuación:
-
-T(n) = d * (n + b)
-= d * n + d * b
-
-Dado que b es una constante (10 en este caso), podemos simplificar:
-
-T(n) = O(d * n)
-
-El valor de d depende del rango de los números en la lista:
-1. Si los números están en un rango fijo (por ejemplo, 0 a 999),
-d es constante y T(n) = O(n)
-2. Si d es logarítmico en relación a n (por ejemplo, números hasta n),
-entonces T(n) = O(n log n)
-3. En el peor caso, donde d es proporcional a n, T(n) = O(n^2)
-
-
+      
 
 
 
