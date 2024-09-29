@@ -224,6 +224,139 @@ Reconstrucción de la lista ordenada: O(n + k)
 Complejidad total:
 O(n + k)
 
+# Complejidad para RadixSort
+
+1.Función getDigit
+ (num / math.pow(10, index).toInt) % 10
+Operaciones:
+math.pow(10, index).toInt: 
+Complejidad: O(1)
+num / ...
+Complejidad: O(1)
+% 10
+Complejidad: O(1)
+Total complejidad de la función: O(1)
+Conclusión de getDigit:
+Complejidad: O(1)
+
+
+2. Función countDigits
+    if (num == 0 && acc > 0) acc
+Complejidad: O(1)
+
+ else countDigits(num / 10, acc + 1)
+Complejidad: O(1)
+
+Llamada recursiva con num reducido y acc incrementado.
+Recursión:
+Número de llamadas recursivas
+Si d es el número de dígitos de num, entonces hay d llamadas recursivas.
+
+Complejidad total de countDigits:
+Complejidad: O(d)
+Donde: d es el número de dígitos de num.
+Operaciones en cada llamada: O(1)
+Total: O(d * 1) = O(d)
+
+
+3. Función flattenBuckets
+
+buckets.flatten.toList
+Operaciones:
+buckets.flatten 
+Complejidad: O(n)
+Donde: n es el número total de elementos en todas las listas dentro de buckets.
+.toList
+Complejidad: O(n)
+Total complejidad de la función: O(n)
+
+Conclusión de flattenBuckets:
+Complejidad: O(n)
+
+4. Función fillBuckets
+
+numbers.foreach { ... }
+Complejidad: O(n)
+
+Operaciones dentro del foreach:
+ val digitValue = getDigit(num, index)
+Complejidad de getDigit: O(1)
+
+ buckets(digitValue) = num :: buckets(digitValue)
+Operaciones:
+buckets(digitValue)
+Complejidad: O(1)
+num :: buckets(digitValue)
+Complejidad: O(1)
+Asignación al array buckets.
+Complejidad: O(1)
+buckets
+Complejidad: O(1)
+
+Complejidad total de fillBuckets:
+Complejidad: O(n)
+Donde: n es el número de elementos en numbers.
+Operaciones por elemento: O(1)
+Total: O(n * 1) = O(n)
+
+5. Función sortByDigit
+
+if (digit == 0) list
+Complejidad: O(1)
+ Creación de emptyBuckets
+Complejidad: O(1)
+Operaciones: Asignaciones y creación de listas vacías.
+ val filledBuckets = fillBuckets(list, emptyBuckets, digit - 1)
+Complejidad de fillBuckets: O(n)
+ sortByDigit(flattenBuckets(filledBuckets), digit - 1)
+Complejidad de flattenBuckets: O(n)
+
+Llamada recursiva a sortByDigit
+Recursión:
+Número de llamadas recursivas: d, donde d es el número máximo de dígitos en los números de la lista.
+Complejidad por llamada:
+
+Operaciones por llamada:
+Creación de emptyBuckets: O(1)
+Llamada a fillBuckets: O(n)
+Llamada a flattenBuckets: O(n)
+Total por llamada: O(n) + O(n) = O(n)
+Complejidad total de sortByDigit:
+
+Total: Número de llamadas * Complejidad por llamada
+Complejidad: O(d * n)
+Donde:
+d es el número de dígitos máximos.
+n es el número de elementos en la lista.
+
+6. Función radixsort
+
+if (list.isEmpty) list
+Complejidad: O(1)
+
+ val maxNum = list.max
+Complejidad: O(n)
+Operación: Recorre la lista una vez.
+
+ val maxDigits = countDigits(maxNum)
+Complejidad de countDigits: O(d)
+Donde: d es el número de dígitos de maxNum.
+
+ sortByDigit(list, maxDigits)
+Complejidad de sortByDigit: O(d * n)
+
+
+Complejidad total de radixsort:
+
+Suma de las operaciones:
+Verificación de lista vacía: O(1)
+Encontrar maxNum: O(n)
+Calcular maxDigits: O(d)
+Llamada a sortByDigit: O(d * n)
+Complejidad total:
+O(n) + O(d) + O(d * n)
+Como O(n) y O(d) son menores que O(d * n), la complejidad total es O(d * n)
+
 
 
 
