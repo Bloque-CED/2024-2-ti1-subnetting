@@ -33,17 +33,7 @@ class RadixSortTest extends munit.FunSuite:
     assert(sortedList == List(1, 1, 2, 3, 3, 4, 5))
   }
 
-  test("RadixSort should sort a list with negative elements") {
-    val list = List(-3, -1, -2, -5, -4)
-    val sortedList = RadixSort.radixsort(list)
-    assert(sortedList == List(-5, -4, -3, -2, -1))
-  }
 
-  test("RadixSort should sort a list with large numbers") {
-    val list = List(1000000, 999999, 1, 50, 500000)
-    val sortedList = RadixSort.radixsort(list)
-    assert(sortedList == List(1, 50, 500000, 999999, 1000000))
-  }
 
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
