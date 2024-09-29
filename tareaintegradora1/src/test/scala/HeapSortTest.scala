@@ -1,9 +1,6 @@
-package test.scala
+class HeapSortTest extends munit.FunSuite:
 
-import munit.FunSuite
-import HeapSort
-
-class HeapSortTest extends FunSuite {
+  import HeapSort.*
 
   test("HeapSort should sort a list of integers") {
     val list = List(4, 10, 3, 5, 1)
@@ -28,4 +25,6 @@ class HeapSortTest extends FunSuite {
     val sortedList = HeapSort.heapsort(list)
     assertEquals(sortedList, List(1, 3, 4, 4, 5, 10))
   }
-}
+
+  import scala.concurrent.duration.*
+  override val munitTimeout = 10.seconds

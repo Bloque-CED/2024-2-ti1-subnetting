@@ -1,8 +1,7 @@
-package test.scala
-import munit.FunSuite
-import RadixSort
+class RadixSortTest extends munit.FunSuite:
 
-class RadixSortTest extends FunSuite {
+  import RadixSort.*
+
 
   test("RadixSort should sort an empty list") {
     val list = List()
@@ -46,7 +45,5 @@ class RadixSortTest extends FunSuite {
     assert(sortedList == List(1, 50, 500000, 999999, 1000000))
   }
 
-
-
-
-}
+  import scala.concurrent.duration.*
+  override val munitTimeout = 10.seconds
