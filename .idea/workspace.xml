@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="168fcf92-0684-40e4-bc68-25c872c49c91" name="Changes" comment="names">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tareaintegradora1/doc/complexiti.md" beforeDir="false" afterPath="$PROJECT_DIR$/tareaintegradora1/doc/complexiti.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +88,8 @@
       <workItem from="1727460315438" duration="852000" />
       <workItem from="1727463851996" duration="1957000" />
       <workItem from="1727622086688" duration="4591000" />
+      <workItem from="1727637498189" duration="1401000" />
+      <workItem from="1727648263031" duration="733000" />
     </task>
     <task id="LOCAL-00001" summary="fix radix">
       <option name="closed" value="true" />

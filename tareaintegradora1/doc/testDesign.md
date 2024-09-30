@@ -27,8 +27,6 @@ Inicialmente se van a tomar casos donde la lista provenga de las siguientes form
 | HeapSort should sort a sorted list                   | HeapSort  | heapSort | Verifica que `heapSort` mantenga el orden de una lista ya ordenada                              | val heap = new HeapSort()           | heapSort(List(1, 2, 3, 4, 5))                                    | List(1, 2, 3, 4, 5)                                         |
 | HeapSort should sort a reverse sorted list           | HeapSort  | heapSort | Verifica que `heapSort` ordene correctamente una lista en orden inverso                         | val heap = new HeapSort()           | heapSort(List(5, 4, 3, 2, 1))                                    | List(1, 2, 3, 4, 5)                                         |
 | HeapSort should sort a list with repeated elements   | HeapSort  | heapSort | Verifica que `heapSort` ordene correctamente una lista con elementos repetidos                  | val heap = new HeapSort()           | heapSort(List(3, 5, 3, 2, 1, 4, 1))                              | List(1, 1, 2, 3, 3, 4, 5)                                   |
-| HeapSort should sort a list with negative numbers    | HeapSort  | heapSort | Verifica que `heapSort` ordene correctamente una lista que contiene números negativos           | val heap = new HeapSort()           | heapSort(List(-3, -1, -2, -5, -4))                               | List(-5, -4, -3, -2, -1)                                    |
-| HeapSort should sort a list with large numbers       | HeapSort  | heapSort | Verifica que `heapSort` maneje correctamente listas con números grandes                         | val heap = new HeapSort()           | heapSort(List(1000000, 999999, 1, 50, 500000))                   | List(1, 50, 500000, 999999, 1000000)                        |
 
 ### Pruebas para CountingSort
 
@@ -50,7 +48,6 @@ Inicialmente se van a tomar casos donde la lista provenga de las siguientes form
 | RadixSort should sort a sorted list                  | RadixSort | radixSort | Verifica que `radixSort` mantenga el orden de una lista ya ordenada                            | val radix = new RadixSort()         | radixSort(List(1, 2, 3, 4, 5))                                  | List(1, 2, 3, 4, 5)                                         |
 | RadixSort should sort a reverse sorted list          | RadixSort | radixSort | Verifica que `radixSort` ordene correctamente una lista en orden inverso                       | val radix = new RadixSort()         | radixSort(List(5, 4, 3, 2, 1))                                  | List(1, 2, 3, 4, 5)                                         |
 | RadixSort should sort a list with repeated elements  | RadixSort | radixSort | Verifica que `radixSort` ordene correctamente una lista con elementos repetidos                | val radix = new RadixSort()         | radixSort(List(3, 5, 3, 2, 1, 4, 1))                            | List(1, 1, 2, 3, 3, 4, 5)                                   |
-| RadixSort should sort a list with large numbers      | RadixSort | radixSort | Verifica que `radixSort` maneje correctamente listas con números grandes                       | val radix = new RadixSort()         | radixSort(List(1000000, 999999, 1, 50, 500000))                 | List(1, 50, 500000, 999999, 1000000)                        |
 
 ## Implementación de las Pruebas
 
